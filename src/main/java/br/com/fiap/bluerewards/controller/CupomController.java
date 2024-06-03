@@ -38,11 +38,13 @@ public class CupomController {
 
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
         
+        log.info("Buscando cupons na API de .NET");
         var cupons = client.getCupons().getBody();
 
         for(CupomDto cupom: cupons){
             if(cupom.getPontuacao() < usuario.get().getPontuacao()){
                 cupom.setDisponivel(true);
+                cupom.setDesbloqueado(false);
             }
         }
 
@@ -50,6 +52,7 @@ public class CupomController {
             for(Cupom cupomUsuario: usuario.get().getCupons()){
                 if(cupom.getCodigo().equals(cupomUsuario.getCodigo())){
                     cupom.setDisponivel(false);
+                    cupom.setDesbloqueado(true);
                 }
             }
         }

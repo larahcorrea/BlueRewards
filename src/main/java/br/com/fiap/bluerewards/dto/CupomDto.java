@@ -13,5 +13,6 @@ public class CupomDto {
     private int pontuacao;
     private EmpresaDto empresa;
     private boolean disponivel;
+    private boolean desbloqueado;
     
 }
