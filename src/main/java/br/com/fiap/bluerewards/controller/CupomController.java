@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bluerewards.clients.CupomClient;
 import br.com.fiap.bluerewards.dto.CupomDto;
+import br.com.fiap.bluerewards.model.Cupom;
 import br.com.fiap.bluerewards.model.Usuario;
 import br.com.fiap.bluerewards.repository.UsuarioRepository;
 import lombok.extern.log4j.Log4j2;
@@ -42,6 +43,14 @@ public class CupomController {
         for(CupomDto cupom: cupons){
             if(cupom.getPontuacao() < usuario.get().getPontuacao()){
                 cupom.setDisponivel(true);
+            }
+        }
+
+        for(CupomDto cupom: cupons){
+            for(Cupom cupomUsuario: usuario.get().getCupons()){
+                if(cupom.getCodigo().equals(cupomUsuario.getCodigo())){
+                    cupom.setDisponivel(false);
+                }
             }
         }
 
