@@ -7,11 +7,11 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
-//@Entity
+@Entity
 public class Empresa {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cnpj;
     private String nome;

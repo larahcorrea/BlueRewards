@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.bluerewards.exceptions.ResourceNotFoundException;
-import br.com.fiap.bluerewards.model.Coleta;
 import br.com.fiap.bluerewards.model.PontoColeta;
 import br.com.fiap.bluerewards.repository.PontoColetaRepository;
 

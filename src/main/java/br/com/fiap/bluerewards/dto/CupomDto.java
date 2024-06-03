@@ -8,6 +8,7 @@ import lombok.Data;
 public class CupomDto {
 
     private String descricao;
+    private String codigo;
     private LocalDateTime validade;
     private int pontuacao;
     private EmpresaDto empresa;
