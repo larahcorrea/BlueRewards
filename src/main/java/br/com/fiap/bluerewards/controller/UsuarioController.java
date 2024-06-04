@@ -214,6 +214,17 @@ public class UsuarioController {
         
     }
 
+    @GetMapping
+    public ResponseEntity<UsuarioResponse> buscarUsuario(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        return ResponseEntity.ok().body(UsuarioResponse.fromUsuario(usuarioOptional.get()));
+
+    }
+
 
 
 

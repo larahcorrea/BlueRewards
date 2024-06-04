@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import br.com.fiap.bluerewards.dto.ColetaDto;
 import br.com.fiap.bluerewards.dto.ColetaResponse;
@@ -35,11 +40,14 @@ public class ColetaController {
     UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public ResponseEntity<List<ColetaResponse>> index(){
-        var list = repository.findAll();
-        List<ColetaResponse> response = list.stream()
+    public ResponseEntity<Page<ColetaResponse>> index(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+        var list = repository.findAll(pageable);
+        
+        List<ColetaResponse> coletasResponse = list.getContent().stream()
                 .map(x -> ColetaResponse.fromColeta(x))
                 .collect(Collectors.toList());
+
+        Page<ColetaResponse> response = new PageImpl<>(coletasResponse, pageable, list.getTotalElements());
         return ResponseEntity.ok(response);
     }
 
