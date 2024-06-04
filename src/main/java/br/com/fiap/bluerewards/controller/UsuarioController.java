@@ -1,20 +1,31 @@
 package br.com.fiap.bluerewards.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import br.com.fiap.bluerewards.dto.ColetaDto;
 import br.com.fiap.bluerewards.dto.CupomDto;
+import br.com.fiap.bluerewards.dto.UsuarioDto;
+import br.com.fiap.bluerewards.dto.UsuarioResponse;
 import br.com.fiap.bluerewards.dto.UsuarioResponseCupom;
 import br.com.fiap.bluerewards.model.Cupom;
 import br.com.fiap.bluerewards.model.Empresa;
@@ -27,6 +38,7 @@ import lombok.extern.log4j.Log4j2;
 
 @RestController
 @Log4j2
+@RequestMapping("usuario")
 public class UsuarioController {
 
     @Autowired
@@ -40,9 +52,12 @@ public class UsuarioController {
 
     @Autowired
     ColetaRepository coletaRepository;
+
+    @Autowired
+    PasswordEncoder encoder;
     
 
-    @PostMapping("usuario/cupons")
+    @PostMapping("/cupons")
     public ResponseEntity<Object> salvarCupons(@RequestBody CupomDto cupomDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -90,7 +105,7 @@ public class UsuarioController {
         return ResponseEntity.ok(UsuarioResponseCupom.fromUsuario(usuarioLogado));
     }
 
-    @GetMapping("/usuario/cupons")
+    @GetMapping("/cupons")
     public ResponseEntity<Set<Cupom>> getAllCupons(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -101,7 +116,7 @@ public class UsuarioController {
 
     }
 
-    @GetMapping("/usuario/coletas")
+    @GetMapping("/coletas")
     public ResponseEntity<List<ColetaDto>> getAllColetas(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -119,6 +134,87 @@ public class UsuarioController {
         return ResponseEntity.ok(response);
 
     }
+
+    @PutMapping
+    public ResponseEntity<Object> updateUsuario(@RequestBody @Validated(UsuarioDto.UsuarioView.UsuarioPut.class)
+                                                @JsonView(UsuarioDto.UsuarioView.UsuarioPut.class) UsuarioDto usuarioDto){
+            
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+                                            
+        log.debug("PUT atualização de usuario recebida usuarioDto {} ", usuarioDto.toString());
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email); 
+        
+        if(!usuarioOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado");
+        }else{
+            var usuarioModel = usuarioOptional.get();
+            usuarioModel.setNome(usuarioDto.getNome());
+
+            usuarioRepository.save(usuarioModel);
+
+            log.info("Usuario atualizado com sucesso usuarioId {}", usuarioModel.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(UsuarioResponse.fromUsuario(usuarioModel));
+        }
+
+     }
+
+    @PutMapping("/password")
+    public ResponseEntity<Object> updateSenha(
+                                             @RequestBody @Validated(UsuarioDto.UsuarioView.PasswordPut.class)
+                                             @JsonView(UsuarioDto.UsuarioView.PasswordPut.class) UsuarioDto usuarioDto){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        log.debug("PUT atualização de senha recebida usuarioDto {} ", usuarioDto.toString());
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        if(!usuarioOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrato");
+        } if(!encoder.matches(usuarioDto.getSenhaAntiga(), usuarioOptional.get().getSenha())){
+            log.warn("Senhas não coincidem usuario {}", email);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: senhas não coincidem");
+        }else{
+            var usuarioModel = usuarioOptional.get();
+
+            usuarioModel.setSenha(encoder.encode(usuarioDto.getSenha()));
+
+            usuarioRepository.save(usuarioModel);
+
+            log.debug("PUT updatePassword usuarioId salvo {} ", usuarioModel.getId());
+            log.info("Senha atualizada com sucesso usuario {} ", usuarioModel.getEmail());
+
+            return ResponseEntity.status(HttpStatus.OK).body("Senha atualizada com sucesso");
+
+        }
+                
+
+    }
+
+
+    @DeleteMapping
+    public ResponseEntity<Object> deletarUsuario(){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        var coletasUsuario = coletaRepository.findByUsuario(usuarioOptional.get());
+
+        if(coletasUsuario.isPresent()){
+            coletaRepository.deleteAll(coletasUsuario.get());
+        }
+
+        usuarioRepository.delete(usuarioOptional.get());
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuário deletado com sucesso");
+
+        
+    }
+
+
 
 
     
