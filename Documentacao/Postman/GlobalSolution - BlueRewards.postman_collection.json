@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "04b26ec7-f522-435d-a0eb-5dc2c9d332b2",
+		"name": "GlobalSolution - BlueRewards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27396215"
+	},
+	"item": [
+		{
+			"name": "Ponto de Coleta",
+			"item": [
+				{
+					"name": "Ponto coleta TODOS",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFuYUBlbWFpbC5jb20iLCJleHAiOjE3MTczNTUzMzd9.DxNpPsR3CgFTNdYFdZfp68HXN7rzf_THPpFLcNBWRV1VqYQN3MLURwm44SAldoMLDchuMZgxZvII9zbZlXSztw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pontoscoleta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pontoscoleta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ponto de coleta por ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFuYUBlbWFpbC5jb20iLCJleHAiOjE3MTczNTUzMzd9.DxNpPsR3CgFTNdYFdZfp68HXN7rzf_THPpFLcNBWRV1VqYQN3MLURwm44SAldoMLDchuMZgxZvII9zbZlXSztw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pontoscoleta/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pontoscoleta",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar ponto de coleta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFuYUBlbWFpbC5jb20iLCJleHAiOjE3MTczNTUzMzd9.DxNpPsR3CgFTNdYFdZfp68HXN7rzf_THPpFLcNBWRV1VqYQN3MLURwm44SAldoMLDchuMZgxZvII9zbZlXSztw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"coleta garrafas plásticas\",\r\n    \"endereco\": \"endereco - SP\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pontoscoleta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pontoscoleta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Coleta",
+			"item": [
+				{
+					"name": "Cadastrar coleta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFuYUBlbWFpbC5jb20iLCJleHAiOjE3MTczNTYxMjN9.wNXh0UM3dfUTaRMYnQKQAVndgP6ilgkYL01uz56X7q-54digasxo2rBPwFeyCmJW4PMxBPrlRynVbKQJEKc1rw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"peso\": 20,\r\n    \"pontoColeta\": {\r\n        \"id\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/coletas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"coletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar coletas TODOS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/coletas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"coletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar coleta ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/coletas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"coletas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cupons",
+			"item": [
+				{
+					"name": "Cupons .NET",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cupons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar cupom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFydGh1ckBlbWFpbC5jb20iLCJleHAiOjE3MTczNzU4MTV9.2z4Tz7vs_JVmgpLwQmEoePSaKperhqBFPAtUfH55oqOwh6NOvQPHN7bHNhpddXAhZBsZvrB0CUxLfdj3H0JA9A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"descricao\": \"10% de desconto em todo o site\",\r\n        \"codigo\": \"10PVC2024\",\r\n        \"validade\": \"2024-06-02T19:29:32.491\",\r\n        \"pontuacao\": 30,\r\n        \"empresa\": {\r\n            \"cnpj\": \"26509414000134\",\r\n            \"nome\": \"Addidas\"\r\n        },\r\n        \"disponivel\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuario/cupons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"cupons"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Cupons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFuYUBlbWFpbC5jb20iLCJleHAiOjE3MTczNzI1NjN9.yWmManOq-RnPdeSdxhM9k3WPG20YuLs1ZqR5K32AK0bykr5TywfVLLsrHKwt31vDwr49GWoJNc3b-O7g4YnAEg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/usuario/cupons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"cupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Coletas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFuYUBlbWFpbC5jb20iLCJleHAiOjE3MTczNzQwMzF9.qf6OI4ipX6Rz_e930OZi1qBTVimXYfA-lRnM6HIRNQb9KmQ-nnEe8DvffVADhS0O2LM0RNhbSi343X4Hg8bLRQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/usuario/coletas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"coletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImFuYUBlbWFpbC5jb20iLCJleHAiOjE3MTc1MzczMzF9.izZXGupbbcA95mtu5MoXS6E1ECLB3wKO52nkjuCsXsnQ8nvu6vuG2H2GtsMjn_hhBHm55jx2hWekXqBsewIk0A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar usuário",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJibHVlcmV3YXJkcyIsInN1YiI6ImxhcmFoQGVtYWlsLmNvbSIsImV4cCI6MTcxNzUzNzc2M30.s2HHEBzhIyF-uH2ilxSMYxg4dwQnVdY7Rnz--WmrLi4CLsWEXKvJIsBFC5-NuBggf_UaYViUs0TRL50ycEr3JA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Larah\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar senha",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar dados",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Novo usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nome\": \"Ana\",\r\n    \"email\": \"ana@email.com\",\r\n    \"senha\": \"senha123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
